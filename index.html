@@ -307,34 +307,43 @@
 
       <!-- Top Audio & Control Toggles -->
       <div class="flex items-center gap-4 text-xs font-mono">
-        <button id="audio-btn" onclick="toggleAudio()"
-          class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-all flex items-center gap-2">
-          <i class="fa-solid fa-volume-high text-cyan-400" id="audio-icon"></i>
-          <span id="audio-label">音效: ON</span>
-        </button>
+        <!-- Top Audio & Control Toggles -->
+        <div class="flex items-center gap-4 text-xs font-mono">
+          <button id="intro-btn" onclick="openIntro()"
+            class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-cyan-800/70 text-cyan-300 transition-all flex items-center gap-2"
+            title="開啟戰情任務簡報與操作說明">
+            <i class="fa-solid fa-circle-question text-cyan-400"></i>
+            <span>任務說明</span>
+          </button>
 
-        <button id="hint-btn" onclick="toggleHints()" aria-pressed="false"
-          class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-all flex items-center gap-2"
-          title="開啟後，選項會預先顯示數值影響（教學模式）">
-          <i class="fa-solid fa-eye-slash text-slate-500" id="hint-icon"></i><span id="hint-label">影響預覽: OFF</span>
-        </button>
+          <button id="audio-btn" onclick="toggleAudio()" <button id="audio-btn" onclick="toggleAudio()"
+            class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-volume-high text-cyan-400" id="audio-icon"></i>
+            <span id="audio-label">音效: ON</span>
+          </button>
 
-        <div class="flex items-center gap-2 px-3 py-1.5 rounded bg-slate-950 border border-slate-800">
-          <span class="relative flex h-2.5 w-2.5">
-            <span id="ping-ring"
-              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-            <span id="ping-dot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
-          </span>
-          <span class="text-slate-400">連線狀態: <span id="status-mode"
-              class="text-cyan-400 font-bold">即時威脅防衛中</span></span>
+          <button id="hint-btn" onclick="toggleHints()" aria-pressed="false"
+            class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-all flex items-center gap-2"
+            title="開啟後，選項會預先顯示數值影響（教學模式）">
+            <i class="fa-solid fa-eye-slash text-slate-500" id="hint-icon"></i><span id="hint-label">影響預覽: OFF</span>
+          </button>
+
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded bg-slate-950 border border-slate-800">
+            <span class="relative flex h-2.5 w-2.5">
+              <span id="ping-ring"
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span id="ping-dot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
+            </span>
+            <span class="text-slate-400">連線狀態: <span id="status-mode"
+                class="text-cyan-400 font-bold">即時威脅防衛中</span></span>
+          </div>
+
+          <button onclick="resetSimulation()"
+            class="px-3 py-1.5 rounded bg-cyan-950 hover:bg-cyan-900 text-cyan-300 border border-cyan-700 transition-all flex items-center gap-1.5">
+            <i class="fa-solid fa-rotate-right"></i> 重置模擬
+          </button>
         </div>
-
-        <button onclick="resetSimulation()"
-          class="px-3 py-1.5 rounded bg-cyan-950 hover:bg-cyan-900 text-cyan-300 border border-cyan-700 transition-all flex items-center gap-1.5">
-          <i class="fa-solid fa-rotate-right"></i> 重置模擬
-        </button>
       </div>
-    </div>
   </header>
   <!-- NEWS TICKER -->
 
@@ -865,7 +874,7 @@
         type: "重大威脅：勒索軟體擴散",
         desc: "週一凌晨 02:15，急診室維生監控終端突然跳出勒索警報。駭客要求 24 小時內支付 30 BTC，否則將銷毀病歷資料並停用急診連線。目前電腦斷層 (CT) 與 PACS 影像系統無法正常傳輸數據。",
         affectedDepts: { er: 'danger', pacs: 'warn' },
-        secs: 30,
+        secs: 60,
         deadline: '勒索付款期限',
         comms: [
           ['hacker', '院長你好。30 BTC，24 小時。我們的耐心有限。'],
@@ -908,7 +917,7 @@
         type: "內部威脅：憑證盜用與個資威脅",
         desc: "SOC 資安戰情室發出告警：數個護理人員帳號於離峰時段由海外 IP 登入藥品調劑系統 (DIS) 與 EMR。疑似先前點擊了偽裝成衛福部公文的釣魚郵件，遭側錄管理者憑證。",
         affectedDepts: { emr: 'danger', pharm: 'warn' },
-        secs: 30,
+        secs: 60,
         deadline: '憑證外洩擴大中',
         comms: [
           ['soc', '海外登入仍在持續，帳號正在被橫向利用。'],
@@ -951,7 +960,7 @@
         type: "物聯網資安：IoMT 零日漏洞威脅",
         desc: "國家資安安控通報：院內加護病房使用之聯網生理監視器存在遠端程式碼執行 (RCE) 漏洞。駭客可發送偽造封包竄改心率與血氧告警，影響 ICU 15 位重症病患照護。",
         affectedDepts: { icu: 'danger' },
-        secs: 30,
+        secs: 60,
         deadline: '偽造封包攻擊進行中',
         comms: [
           ['nurse', 'ICU 的血氧數字一直亂跳，我們不知道哪個才是真的！'],
@@ -993,7 +1002,7 @@
         type: "法規與公關：資安法規遵從危機",
         desc: "媒體與主管機關接獲檢舉，暗網論壇出現本院部分病患名冊與檢驗報告。衛福部與資通安全署要求 2 小時內提出正式事故通報與應變說明報告。",
         affectedDepts: { emr: 'warn' },
-        secs: 25,
+        secs: 60,
         deadline: '主管機關通報期限',
         comms: [
           ['gov', '衛福部來函：請於期限內提交正式事故通報。'],
@@ -1034,7 +1043,7 @@
         type: "供應鏈資安：第三方維運通道遭劫持",
         desc: "資安監控發現，合作醫材商的遠端維運 VPN 帳號在凌晨 3 點對院內檢驗資訊系統 (LIS) 發出大量資料庫查詢指令，疑似廠商端工程師筆電遭木馬植入，成為駭客滲透醫院的跳板。",
         affectedDepts: { emr: 'warn', er: 'warn' },
-        secs: 30,
+        secs: 60,
         deadline: '異常資料庫查詢持續中',
         comms: [
           ['soc', '查詢來源是合法白名單廠商 VPN，但行為完全是自動化資料撈取！'],
@@ -1076,7 +1085,7 @@
         type: "可用性危機：分散式阻斷服務攻擊",
         desc: "週一上午 08:30 門診尖峰時刻，境外殭屍網路發動每秒 45 Gbps 的 HTTPS Flood 攻擊，癱瘓本院網路掛號系統、看診進度查詢與跨院轉診 FHIR API，大廳現場湧入大批抱怨民眾。",
         affectedDepts: { er: 'warn', pharm: 'warn' },
-        secs: 25,
+        secs: 60,
         deadline: '門診尖峰流量壅塞中',
         comms: [
           ['soc', '核心 HIS 主機 CPU 正常，但對外頻寬與防火牆 Session 數已 100% 滿載！'],
@@ -1116,7 +1125,7 @@
         type: "資料外洩風險：影像系統暴露於公網",
         desc: "資安研究員通報：院內一台新上線的 PACS 影像中繼伺服器因防火牆 NAT 規則誤設，導致 DICOM Port 104 暴露於網際網路且未啟用 TLS 加密，已有不明海外 IP 執行過 C-FIND 病患影像查詢。",
         affectedDepts: { pacs: 'danger' },
-        secs: 30,
+        secs: 60,
         deadline: '影像中繼主機暴露中',
         comms: [
           ['soc', '查詢紀錄顯示對方已取得部分 X 光與 CT 影像的 Metadata（含姓名與病歷號）！'],
@@ -1158,7 +1167,7 @@
         type: "勒索前兆：備份體系破壞攻擊",
         desc: "深夜監控系統偵測到網域管理員 (Domain Admin) 帳號正透過 PowerShell 遠端連線至儲存機房，試圖停用 Veeam 備份服務並刪除近 30 天的不可變備份快照 (Immutable Snapshot)，這是勒索軟體加密全院前的典型前兆。",
         affectedDepts: { emr: 'danger', pacs: 'warn' },
-        secs: 25,
+        secs: 60,
         deadline: '核心備份快照刪除倒數',
         comms: [
           ['soc', '攻擊者已經拿到 AD 網域最高權限！正在清理備份與磁碟區陰影複製！'],
@@ -1199,7 +1208,7 @@
         type: "工控與醫材資安：內部橫向感染",
         desc: "外包工程師使用未經掃毒的隨身碟更新放射科超音波與數位 X 光工作站後，老舊 Windows 7 嵌入式系統爆發 SMB 蠕蟲病毒，正透過內網醫療設備 VLAN 掃描鄰近的檢驗與藥局終端。",
         affectedDepts: { pacs: 'danger', pharm: 'warn' },
-        secs: 30,
+        secs: 60,
         deadline: '內網 SMB 蠕蟲擴散中',
         comms: [
           ['soc', '該網段許多醫療儀器因原廠認證限制無法安裝傳統防毒軟體！'],
@@ -1239,7 +1248,7 @@
         type: "隱私與合規：人為設定疏失個資外洩",
         desc: "健檢中心行政人員為方便跨部門統計，將內含 2,800 筆企業高階主管與 VIP 病患姓名、身分證字號與異常檢驗摘要的雲端表格設為「知道連結的任何人均可檢視」，已被搜尋引擎索引到快取頁面。",
         affectedDepts: { emr: 'warn' },
-        secs: 25,
+        secs: 60,
         deadline: '搜尋引擎快取擴散中',
         comms: [
           ['gov', '個資法規定發生個人資料被竊取、洩漏時，應於查明後以適當方式通知當事人！'],
@@ -1280,7 +1289,7 @@
         type: "臨床安全危機：醫療訊息協定竄改",
         desc: "藥師核對住院病患餐包時發現，自動包藥機列印出的部分處方劑量與醫師在 HIS 系統開立的醫囑不符！資安團隊抓包發現內網有人對未加密的 HL7 v2 傳輸埠口發送偽造修改封包。",
         affectedDepts: { pharm: 'danger', icu: 'warn' },
-        secs: 30,
+        secs: 60,
         deadline: '高風險給藥錯誤威脅',
         comms: [
           ['nurse', '差一點就把兩倍劑量的抗凝血劑送到病房了！這是會出人命的！'],
@@ -1321,7 +1330,7 @@
         type: "身分安全危機：高權限醫師帳號釣魚攻擊",
         desc: "多位主治醫師手機收到簡訊，內容附有與本院單一簽入 (SSO) 幾乎一模一樣的假網址，要求「30 分鐘內完成電子簽章憑證展延」。已有 4 名醫師輸入帳密，攻擊者正嘗試用這些帳號遠端存取 VIP 病歷。",
         affectedDepts: { emr: 'danger', er: 'warn' },
-        secs: 25,
+        secs: 60,
         deadline: '醫師電子簽章憑證遭濫用中',
         comms: [
           ['soc', '醫師帳號擁有跨科調閱病歷與開立管制藥品的權限，風險極高！'],
@@ -1617,7 +1626,9 @@
 
       });
       state.activeScenarios = drawRandomScenarios();
-      loadScenario(0);
+      state.activeScenarios = drawRandomScenarios();
+      gameStarted = false;
+      document.getElementById('intro-modal')?.classList.remove('hidden');
 
       startNewsTicker();
 
@@ -1685,7 +1696,7 @@
       const tw = (TWISTS[data.id] || []).filter(t => state.flags.includes(t.f));
       const add = k => tw.reduce((a, t) => a + ((t.mod && t.mod[k]) || 0), 0);
       state.curOptions = data.options.map(o => ({ ...o, impact: { op: o.impact.op + add('op'), priv: o.impact.priv + add('priv'), threat: o.impact.threat + add('threat') } }));
-      const secs = Math.max(12, (data.secs || 30) + tw.reduce((a, t) => a + (t.time || 0), 0));
+      const secs = Math.max(20, (data.secs || 60) + tw.reduce((a, t) => a + (t.time || 0), 0));
       stopTimer();
       document.getElementById('twist-box').innerHTML = '';
       document.getElementById('comm-box').innerHTML = '';
@@ -1770,11 +1781,30 @@
       4: [['gov', '衛福部來函：請於期限內提交正式事故通報。'], ['dean', '媒體已經在門口了，我們到底要說什麼？'], ['hacker', '更多名單明天會上架。想談的話，我隨時在線。']]
     };
 
-    const timer = { id: null, left: 0, total: 0 };
+    const timer = { id: null, left: 0, total: 0, paused: false };
+
     function stopTimer() {
-      clearInterval(timer.id); timer.id = null;
+      clearInterval(timer.id);
+      timer.id = null;
+      timer.paused = false;
       document.getElementById('timer-wrap').classList.add('hidden');
     }
+
+    function pauseTimer() {
+      if (timer.id && !timer.paused && timer.left > 0) {
+        clearInterval(timer.id);
+        timer.id = null;
+        timer.paused = true;
+      }
+    }
+
+    function resumeTimer() {
+      if (timer.paused && timer.left > 0) {
+        timer.paused = false;
+        runTimerLoop();
+      }
+    }
+
     function showComm([c, txt]) {
       const ch = CHARS[c], box = document.getElementById('comm-box');
       const d = document.createElement('div');
@@ -1784,26 +1814,50 @@
       while (box.children.length > 3) box.firstChild.remove();
       sound.playComm();
     }
+
+    let timerFiredSet = new Set();
+    let timerLastTick = -1;
+
     function startTimer(sec, label) {
       stopTimer();
       timer.total = timer.left = sec;
-      const wrap = document.getElementById('timer-wrap'), bar = document.getElementById('timer-bar'), txt = document.getElementById('timer-text');
+      timer.paused = false;
+      timerFiredSet = new Set();
+      timerLastTick = -1;
+
+      const wrap = document.getElementById('timer-wrap');
+      const bar = document.getElementById('timer-bar');
+      const txt = document.getElementById('timer-text');
       wrap.classList.remove('hidden');
       document.getElementById('timer-label').innerHTML = `<i class="fa-solid fa-hourglass-half mr-1"></i>${label}`;
-      const lines = state.activeScenarios[state.currentPhase].comms || [], fired = new Set();
-      let lastTick = -1;
+      bar.style.width = '100%';
+      bar.className = 'h-full bg-emerald-400';
+      txt.textContent = `${Math.ceil(sec)} 秒`;
+      txt.className = 'font-bold text-emerald-400';
+
+      // 若當下 Intro 彈窗正在開啟，先保持暫停，等關掉彈窗再繼續倒數
+      const introModal = document.getElementById('intro-modal');
+      if (introModal && !introModal.classList.contains('hidden')) {
+        timer.paused = true;
+        return;
+      }
+
+      runTimerLoop();
+    }
+
+    function runTimerLoop() {
+      clearInterval(timer.id);
+      const bar = document.getElementById('timer-bar');
+      const txt = document.getElementById('timer-text');
+      const lines = state.activeScenarios[state.currentPhase]?.comms || [];
+
       timer.id = setInterval(() => {
+        if (timer.paused) return;
         timer.left -= 0.25;
-        const r = Math.max(0, timer.left / timer.total), s = Math.ceil(Math.max(0, timer.left));
+        const r = Math.max(0, timer.left / timer.total);
+        const s = Math.ceil(Math.max(0, timer.left));
         bar.style.width = `${r * 100}%`;
         txt.textContent = `${s} 秒`;
-        // 倒數顏色變化
-        bar.classList.remove(
-          "bg-green-500",
-          "bg-yellow-400",
-          "bg-red-500",
-          "animate-pulse"
-        );
 
         if (s > 15) {
           bar.className = "h-full bg-emerald-400";
@@ -1819,9 +1873,21 @@
           txt.className = "font-bold text-red-500 danger-flash";
         }
 
-        [0.66, 0.33, 0.12].forEach((t, i) => { if (r <= t && !fired.has(i) && lines[i]) { fired.add(i); showComm(lines[i]); } });
-        if (s <= 5 && s !== lastTick && timer.left > 0) { lastTick = s; sound.playClick(); }
-        if (timer.left <= 0) { stopTimer(); autoWorst(); }
+        [0.66, 0.33, 0.12].forEach((t, i) => {
+          if (r <= t && !timerFiredSet.has(i) && lines[i]) {
+            timerFiredSet.add(i);
+            showComm(lines[i]);
+          }
+        });
+
+        if (s <= 5 && s !== timerLastTick && timer.left > 0) {
+          timerLastTick = s;
+          sound.playClick();
+        }
+        if (timer.left <= 0) {
+          stopTimer();
+          autoWorst();
+        }
       }, 250);
     }
     function autoWorst() {
@@ -2538,7 +2604,110 @@ ${document.getElementById('report-ai-feedback').innerText.replace(/<[^>]+>/g, ''
       if (navigator.clipboard) navigator.clipboard.writeText(reportText).then(() => showToast(msg)).catch(fallback);
       else fallback();
     }
+    let skipIntroOnNextLoad = false;
+
+    function openIntro() {
+      sound.playClick();
+      document.getElementById('intro-modal')?.classList.remove('hidden');
+    }
+
+    function closeIntro() {
+      const cb = document.getElementById('skip-intro-checkbox');
+      if (cb && cb.checked) skipIntroOnNextLoad = true;
+      sound.playClick();
+      document.getElementById('intro-modal')?.classList.add('hidden');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('intro-modal');
+        if (modal && !modal.classList.contains('hidden')) closeIntro();
+      }
+    });
+    let gameStarted = false;
+
+    function openIntro() {
+      sound.playClick();
+      pauseTimer(); // 打開彈窗時暫停遊戲倒數
+      const startBtnText = document.getElementById('intro-start-text');
+      if (startBtnText) {
+        startBtnText.innerText = gameStarted ? '繼續作戰（恢復倒數）' : '開始任務，進入戰情中心';
+      }
+      document.getElementById('intro-modal')?.classList.remove('hidden');
+    }
+
+    function closeIntro() {
+      sound.playClick();
+      document.getElementById('intro-modal')?.classList.add('hidden');
+      if (!gameStarted) {
+        gameStarted = true;
+        loadScenario(0);
+      } else {
+        resumeTimer(); // 關掉彈窗後繼續倒數計時
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('intro-modal');
+        if (modal && !modal.classList.contains('hidden')) closeIntro();
+      }
+    });
   </script>
+  <!-- 戰情任務 Intro 彈窗 -->
+  <div id="intro-modal"
+    class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div
+      class="cyber-card rounded-xl max-w-2xl w-full p-6 md:p-7 text-slate-200 space-y-5 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+          <div class="text-[11px] font-mono text-cyan-400 uppercase tracking-wider mb-1">MISSION BRIEFING // 任務簡報</div>
+          <h2 class="text-xl md:text-2xl font-bold text-white font-tech">醫療資安危機戰情模擬器</h2>
+        </div>
+        <button onclick="closeIntro()" aria-label="關閉任務簡報"
+          class="text-slate-400 hover:text-white px-2.5 py-1 rounded border border-slate-800 hover:border-slate-600 text-xs font-mono">
+          關閉 (ESC)
+        </button>
+      </div>
+
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-mono">
+        你將擔任<strong
+          class="text-cyan-300">「醫資危機處理小組指揮官」</strong>。醫院正面臨勒索軟體、釣魚憑證外洩、醫療物聯網（IoMT）漏洞與暗網威脅，你的每一個決策都會同時牽動<strong
+          class="text-emerald-300">臨床營運</strong>、<strong class="text-indigo-300">病患隱私</strong>與<strong
+          class="text-rose-300">威脅擴散</strong>。
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+        <div class="p-3.5 rounded-lg bg-slate-950/90 border border-slate-800 space-y-1.5">
+          <div class="text-cyan-400 font-bold"><i class="fa-solid fa-gamepad mr-1.5"></i>作戰流程</div>
+          <div class="text-slate-300">• 共 5 個危機階段，每題限時 60 秒</div>
+          <div class="text-slate-300">• 點擊選項或按鍵盤 <span class="text-amber-300">1 / 2 / 3</span> 下達指令</div>
+          <div class="text-slate-300">• 點擊事件描述框可立即跳過打字動畫</div>
+        </div>
+
+        <div class="p-3.5 rounded-lg bg-slate-950/90 border border-slate-800 space-y-1.5">
+          <div class="text-amber-400 font-bold"><i class="fa-solid fa-scale-balanced mr-1.5"></i>資源與風險權衡</div>
+          <div class="text-slate-300">• 每次決策會消耗「預算」與「人力」</div>
+          <div class="text-slate-300">• 科室若處於異常狀態，每回合可能帶來額外影響</div>
+          <div class="text-slate-300">• 結束後將產出 NIST 評級與檢討報告</div>
+        </div>
+      </div>
+
+      <div
+        class="p-3 rounded-lg bg-cyan-950/35 border border-cyan-800/60 text-xs font-mono text-cyan-200 flex items-center gap-2.5">
+        <i class="fa-solid fa-circle-info text-cyan-400 shrink-0"></i>
+        <span>提示：作戰途中隨時可點上方「<strong>任務說明</strong>」重新查看本頁（檢視期間倒數會自動暫停）；想看數值變化可開啟「<strong>影響預覽</strong>」。</span>
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <button onclick="closeIntro()"
+          class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs sm:text-sm font-mono transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-play"></i>
+          <span id="intro-start-text">開始任務，進入戰情中心</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
