@@ -301,6 +301,13 @@
       max-width: 100%;
       display: block;
     }
+
+    /* 保持桌面版寬度基準，由腳本等比例縮放 */
+    #app-scale-root {
+      width: 1280px;
+      min-height: 100vh;
+      transform-origin: top center;
+    }
   </style>
 </head>
 
@@ -343,12 +350,14 @@
 
         <button id="audio-btn" onclick="toggleAudio()"
           class="px-2.5 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-all flex items-center gap-1.5 shrink-0">
-          <!-- 保留原本裡面的 icon 與 span -->
+          <i id="audio-icon" class="fa-solid fa-volume-high text-cyan-400"></i>
+          <span id="audio-label">音效: ON</span>
         </button>
 
         <button id="hint-btn" onclick="toggleHints()"
           class="px-2.5 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition-all flex items-center gap-1.5 shrink-0">
-          <!-- 保留原本裡面的 icon 與 span -->
+          <i id="hint-icon" class="fa-solid fa-eye-slash text-slate-500"></i>
+          <span id="hint-label">影響預覽: OFF</span>
         </button>
 
         <!-- 連線狀態標籤在超窄手機（<400px）上縮成精簡樣式 -->
@@ -371,6 +380,7 @@
       🚨 醫療資安戰情中心啟動中　　🚨 PACS影像系統傳輸異常　　🚨 EMR疑似遭未授權存取　　🚨 勒索軟體活動持續監測中　　🚨 SOC事件等級提升至 Level 3
     </div>
   </div>
+  <div id="app-scale-root" class="w-full flex-1 flex flex-col"></div>
   <!-- Main Grid Dashboard -->
   <main
     class="max-w-[95vw] mx-auto px-2 lg:px-4 py-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 z-10 relative">
@@ -772,6 +782,7 @@
     </section>
 
   </main>
+  </div>
 
   <div id="toast" role="status"
     class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] px-4 py-2 rounded bg-cyan-950 border border-cyan-500 text-cyan-200 text-xs font-mono opacity-0 pointer-events-none">
@@ -2622,26 +2633,7 @@ ${document.getElementById('report-ai-feedback').innerText.replace(/<[^>]+>/g, ''
       if (navigator.clipboard) navigator.clipboard.writeText(reportText).then(() => showToast(msg)).catch(fallback);
       else fallback();
     }
-    let skipIntroOnNextLoad = false;
 
-    function openIntro() {
-      sound.playClick();
-      document.getElementById('intro-modal')?.classList.remove('hidden');
-    }
-
-    function closeIntro() {
-      const cb = document.getElementById('skip-intro-checkbox');
-      if (cb && cb.checked) skipIntroOnNextLoad = true;
-      sound.playClick();
-      document.getElementById('intro-modal')?.classList.add('hidden');
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const modal = document.getElementById('intro-modal');
-        if (modal && !modal.classList.contains('hidden')) closeIntro();
-      }
-    });
     let gameStarted = false;
 
     function openIntro() {
@@ -2671,6 +2663,30 @@ ${document.getElementById('report-ai-feedback').innerText.replace(/<[^>]+>/g, ''
         if (modal && !modal.classList.contains('hidden')) closeIntro();
       }
     });
+    function applyProportionalScale() {
+      const root = document.getElementById('app-scale-root');
+      if (!root) return;
+
+      const baseWidth = 1280; // 桌機基準寬度，可依喜好微調
+      const viewportWidth = window.innerWidth;
+
+      // 平板與中小螢幕（640px ~ 1279px）等比例縮放；超窄手機（< 640px）維持直向好按
+      if (viewportWidth >= 640 && viewportWidth < baseWidth) {
+        const scale = viewportWidth / baseWidth;
+        root.style.transform = `scale(${scale})`;
+        root.style.width = `${baseWidth}px`;
+        document.body.style.height = `${root.getBoundingClientRect().height}px`;
+        document.body.style.overflowX = 'hidden';
+      } else {
+        root.style.transform = 'scale(1)';
+        root.style.width = '100%';
+        document.body.style.height = 'auto';
+        document.body.style.overflowX = 'hidden';
+      }
+    }
+
+    window.addEventListener('resize', applyProportionalScale);
+    window.addEventListener('DOMContentLoaded', applyProportionalScale);
   </script>
   <!-- 戰情任務 Intro 彈窗 -->
   <div id="intro-modal"
