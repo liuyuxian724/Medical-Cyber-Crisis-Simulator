@@ -304,9 +304,7 @@
 
     /* 保持桌面版寬度基準，由腳本等比例縮放 */
     #app-scale-root {
-      width: 1280px;
-      min-height: 100vh;
-      transform-origin: top center;
+      max-width: 100%;
     }
   </style>
 </head>
@@ -2667,22 +2665,30 @@ ${document.getElementById('report-ai-feedback').innerText.replace(/<[^>]+>/g, ''
       const root = document.getElementById('app-scale-root');
       if (!root) return;
 
-      const baseWidth = 1280; // 桌機基準寬度，可依喜好微調
       const viewportWidth = window.innerWidth;
+      const tabletBaseWidth = 1024; // 平板等比例縮放基準（可依喜好改成 1024 或 1152）
 
-      // 平板與中小螢幕（640px ~ 1279px）等比例縮放；超窄手機（< 640px）維持直向好按
-      if (viewportWidth >= 640 && viewportWidth < baseWidth) {
-        const scale = viewportWidth / baseWidth;
+      // 先清除前一次狀態，避免不同設備切換時殘留
+      root.style.transform = '';
+      root.style.transformOrigin = '';
+      root.style.width = '';
+      root.style.marginLeft = '';
+      root.style.marginRight = '';
+      root.style.marginBottom = '';
+
+      // 1. 平板區間（640px ~ 1023px）：等比例縮小，維持雙欄比例不擠壓
+      if (viewportWidth >= 640 && viewportWidth < tabletBaseWidth) {
+        const scale = viewportWidth / tabletBaseWidth;
+        root.style.transformOrigin = 'top left';
         root.style.transform = `scale(${scale})`;
-        root.style.width = `${baseWidth}px`;
-        document.body.style.height = `${root.getBoundingClientRect().height}px`;
-        document.body.style.overflowX = 'hidden';
-      } else {
-        root.style.transform = 'scale(1)';
-        root.style.width = '100%';
-        document.body.style.height = 'auto';
-        document.body.style.overflowX = 'hidden';
+        root.style.width = `${tabletBaseWidth}px`;
+
+        // 修正 transform scale 後元素視覺高度變小，避免下方多出空白
+        const actualHeight = root.offsetHeight;
+        const scaledHeight = actualHeight * scale;
+        root.style.marginBottom = `${scaledHeight - actualHeight}px`;
       }
+      // 2. 桌機（>= 1024px）與手機（< 640px）：維持正常流暢排版，不留多餘空白
     }
 
     window.addEventListener('resize', applyProportionalScale);
