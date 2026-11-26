@@ -870,6 +870,7 @@
     // --- State Management ---
     const state = {
       currentPhase: 0,
+      firstPhaseStarted: false,
       opRate: 100,
       privIndex: 100,
       threatLevel: 0,
@@ -2014,7 +2015,6 @@
 
       });
       state.activeScenarios = drawRandomScenarios();
-      state.activeScenarios = drawRandomScenarios();
       gameStarted = false;
       document.getElementById('intro-modal')?.classList.remove('hidden');
 
@@ -2109,11 +2109,37 @@
       document.getElementById('comm-box').innerHTML = '';
       const baseSecs = (typeof SECS !== 'undefined' && SECS[data.id]) || data.secs || 60;
       const secs = Math.max(20, baseSecs + tw.reduce((a, t) => a + (t.time || 0), 0));
-      typeWriter(data.desc, 'typewriter-text', () => {
-        document.getElementById('twist-box').innerHTML = tw.map(t => `<div class="rise text-xs p-2.5 rounded border border-amber-500/50 bg-amber-950/30 text-amber-300"><i class="fa-solid fa-link mr-1.5"></i>${t.text}</div>`).join('');
-        renderOptions(state.curOptions);
-        startTimer(secs, data.deadline || '危機應變倒數');
-      });
+      const beginPhaseContent = () => {
+        typeWriter(data.desc, 'typewriter-text', () => {
+          document.getElementById('twist-box').innerHTML = tw
+            .map(t => `<div class="rise text-xs p-2.5 rounded border border-amber-500/50 bg-amber-950/30 text-amber-300"><i class="fa-solid fa-link mr-1.5"></i>${t.text}</div>`)
+            .join('');
+          renderOptions(state.curOptions);
+          startTimer(secs, data.deadline || '危機應變倒數');
+        });
+      };
+
+      if (index === 0 && !state.firstPhaseStarted) {
+        stopTimer();
+        document.getElementById('typewriter-text').textContent = '（準備就緒後點擊下方按鈕開始作答，題目與計時將同步啟動）';
+        document.getElementById('twist-box').innerHTML = '';
+        document.getElementById('options-container').innerHTML = `
+    <div class="rise p-5 rounded-lg border border-cyan-500/40 bg-slate-950/90 text-center space-y-3">
+      <div class="text-xs font-mono text-cyan-300">第一階段危機簡報已就緒，按下「開始作答」後將顯示題目並開始倒數</div>
+      <button id="start-answering-btn" type="button"
+        class="px-5 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs sm:text-sm font-mono transition-all">
+        <i class="fa-solid fa-play mr-1.5"></i>開始作答
+      </button>
+    </div>
+  `;
+        document.getElementById('start-answering-btn').onclick = () => {
+          sound.playClick();
+          state.firstPhaseStarted = true;
+          beginPhaseContent();
+        };
+      } else {
+        beginPhaseContent();
+      }
       if (state.depts.icu === "danger" && data.id === 4) {
         showToast("ICU 事件未完全處理，駭客已利用醫療設備作為跳板。");
         state.threatLevel = clamp(state.threatLevel + 15, 0, 100);
@@ -2946,6 +2972,7 @@ ${penalty.toLocaleString()}
 
     function resetSimulation() {
       sound.playClick();
+      state.firstPhaseStarted = false;
       state.currentPhase = 0;
       state.opRate = 100;
       state.privIndex = 100;
