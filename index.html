@@ -312,6 +312,40 @@
       white-space: nowrap;
       font-size: clamp(10px, 1.1vw, 11px);
     }
+
+    /* 安全放大閱讀字體（不撐爆頂部列與小徽章） */
+    @media (max-width: 1024px) {
+
+      /* 1. 只放大題目敘述與提示框內文 */
+      #typewriter-text {
+        font-size: 1rem !important;
+        /* 約 16px，清楚好讀 */
+        line-height: 1.65 !important;
+      }
+
+      #twist-box,
+      #comm-box {
+        font-size: 0.875rem !important;
+        /* 約 14px */
+        line-height: 1.55 !important;
+      }
+
+      /* 2. 選項卡片只放大主要說明文字，保持高度彈性不裁切 */
+      #options-container button {
+        height: auto !important;
+        min-height: 3.25rem;
+        font-size: 0.9375rem !important;
+        /* 約 15px */
+        line-height: 1.5 !important;
+      }
+
+      /* 3. 選項裡的小標籤（預算、人力等徽章）維持緊湊，避免擠到換行變形 */
+      #options-container button span[class*="text-[10px]"],
+      #options-container button .font-mono {
+        font-size: 0.75rem !important;
+        line-height: 1.25 !important;
+      }
+    }
   </style>
 </head>
 
