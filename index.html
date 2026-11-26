@@ -909,6 +909,7 @@
         options: [
           {
             label: "【策略 A】實施網絡實體隔離 (Air-Gap Isolation)，急診全面切換至紙本備援機制",
+            toneType: 'green',
             cost: [10, 30],
             flag: 'paper_mode',
             impact: { op: -25, priv: 0, threat: +10 },
@@ -918,6 +919,7 @@
           },
           {
             label: "【策略 B】在線上嘗試掛載修補程式，並透過邊界防火牆封鎖駭客 Command & Control IP",
+            toneType: 'red',
             cost: [5, 10],
             flag: 'emr_breach',
             darkWeb: { msg: "[GhostFox] EMR breached successfully.", ticker: "🚨 病歷資料庫疑似遭入侵，醫院啟動最高警戒。", attackId: "attack-emr" },
@@ -928,6 +930,7 @@
           },
           {
             label: "【策略 C】調派急診重症患者分流轉診至聯防醫院，並派員進行現場資安鑑識",
+            toneType: 'yellow',
             cost: [25, 20],
             impact: { op: -20, priv: -10, threat: +15 },
             deptChanges: { er: 'warn', pacs: 'warn' },
@@ -952,6 +955,7 @@
         options: [
           {
             label: "【策略 A】啟動 Zero Trust 應變機制：強制全院連線中斷並實施雙重身分驗證 (MFA) 重設",
+            toneType: 'green',
             cost: [20, 15],
             impact: { op: -15, priv: +5, threat: -20 },
             deptChanges: { emr: 'ok', pharm: 'ok' },
@@ -960,6 +964,7 @@
           },
           {
             label: "【策略 B】僅封鎖受影響的護理站 IP 與帳號，並派員對藥局進行人工盤點",
+            toneType: 'red',
             cost: [5, 10],
             flag: 'phish_open',
             darkWeb: { msg: "[BlackHand] Nurse credentials acquired.", ticker: "🚨 海外異常登入暴增，護理帳號疑似遭盜用。", attackId: "attack-pacs" },
@@ -970,6 +975,7 @@
           },
           {
             label: "【策略 C】暫停藥物調劑系統 2 小時進行系統快照與記憶體鑑識 (Memory Forensics)",
+            toneType: 'yellow',
             cost: [15, 25],
             flag: 'pharm_queue',
             impact: { op: -20, priv: 0, threat: -10 },
@@ -995,6 +1001,7 @@
         options: [
           {
             label: "【策略 A】將所有 ICU 監視器實施實體網路拔線，調派雙倍護理人力進行每 15 分鐘人工量測",
+            toneType: 'yellow',
             cost: [10, 35],
             impact: { op: -25, priv: +5, threat: -25 },
             deptChanges: { icu: 'warn' },
@@ -1003,6 +1010,7 @@
           },
           {
             label: "【策略 B】於資安交換器套用微斷隔離 (Micro-segmentation) 與 Deep Packet Inspection 規則",
+            toneType: 'green',
             cost: [30, 10],
             impact: { op: -5, priv: -10, threat: -5 },
             deptChanges: { icu: 'ok' },
@@ -1011,6 +1019,7 @@
           },
           {
             label: "【策略 C】聯絡設備供應商在線推播遠端韌體更新 (Firmware Update)",
+            toneType: 'red',
             cost: [10, 5],
             flag: 'bad_update',
             darkWeb: { msg: "[GhostFox] ICU network vulnerable.", ticker: "🚨 ICU 聯網設備異常，重症病房進入警戒狀態。", attackId: "attack-icu" },
@@ -1037,6 +1046,7 @@
         options: [
           {
             label: "【策略 A】依據 NIST SP 800-61 標準坦承事件，公開說明應變措施並提供免費個資防禦監控",
+            toneType: 'green',
             cost: [25, 15],
             impact: { op: -5, priv: +10, threat: -20 },
             deptChanges: { emr: 'ok', er: 'ok' },
@@ -1045,6 +1055,7 @@
           },
           {
             label: "【策略 B】發表聲明指稱此為「不實謠言與假訊息」，試圖封鎖媒體消息",
+            toneType: 'red',
             cost: [0, 5],
             flag: 'cover_up',
             impact: { op: 0, priv: -35, threat: +40 },
@@ -1054,6 +1065,7 @@
           },
           {
             label: "【策略 C】聘請外部第三方鑑識團隊進行權威認證後，再行發布綜合說明",
+            toneType: 'yellow',
             cost: [35, 10],
             impact: { op: -10, priv: -5, threat: 0 },
             deptChanges: { emr: 'warn' },
@@ -1078,6 +1090,7 @@
         options: [
           {
             label: "【策略 A】立即撤銷所有第三方廠商 VPN 憑證，改採單次申請、全程側錄的 Bastion 跳板機機制",
+            toneType: 'green',
             cost: [20, 15],
             impact: { op: -15, priv: +10, threat: -20 },
             deptChanges: { emr: 'ok', er: 'ok' },
@@ -1086,6 +1099,7 @@
           },
           {
             label: "【策略 B】僅通知廠商自行更換密碼，院內維持連線以免影響急診檢驗儀器校正",
+            toneType: 'red',
             cost: [5, 5],
             flag: 'emr_breach',
             darkWeb: { msg: "[GhostFox] Vendor VPN pivot into LIS/EMR.", ticker: "🚨 第三方維運通道遭利用，檢驗與病歷資料暴露風險升高。", attackId: "attack-emr" },
@@ -1096,6 +1110,7 @@
           },
           {
             label: "【策略 C】將 LIS 檢驗系統切換為離線單機模式，所有報告改由傳真與人工送單至急診",
+            toneType: 'yellow',
             cost: [10, 30],
             impact: { op: -25, priv: +5, threat: -10 },
             deptChanges: { er: 'warn', emr: 'ok' },
@@ -1120,6 +1135,7 @@
         options: [
           {
             label: "【策略 A】緊急啟用電信商 BGP 流量清洗 (DDoS Scrubbing) 並對 API 實施速率限制與 Geo-IP 過濾",
+            toneType: 'green',
             cost: [30, 10],
             impact: { op: -10, priv: 0, threat: -20 },
             deptChanges: { er: 'ok', pharm: 'ok' },
@@ -1128,6 +1144,7 @@
           },
           {
             label: "【策略 B】直接重啟邊界防火牆並將所有對外服務 IP 暫時下線 3 小時避風頭",
+            toneType: 'red',
             cost: [5, 15],
             impact: { op: -30, priv: 0, threat: -5 },
             deptChanges: { er: 'danger', pharm: 'warn' },
@@ -1136,6 +1153,7 @@
           },
           {
             label: "【策略 C】維持對外連線並加開現場人工掛號窗口，讓 IT 人員手動逐筆封鎖來源 IP",
+            toneType: 'yellow',
             cost: [10, 25],
             impact: { op: -20, priv: -5, threat: +15 },
             deptChanges: { er: 'warn', pharm: 'warn' },
@@ -1160,6 +1178,7 @@
         options: [
           {
             label: "【策略 A】立即關閉公網 NAT 映射、強制內網 DICOM 啟用 TLS 憑證驗證，並比對存取日誌清查外洩範圍",
+            toneType: 'green',
             cost: [20, 15],
             impact: { op: -10, priv: +10, threat: -20 },
             deptChanges: { pacs: 'ok' },
@@ -1168,6 +1187,7 @@
           },
           {
             label: "【策略 B】直接將整座 PACS 影像機房斷網隔離 4 小時進行全面重灌",
+            toneType: 'yellow',
             cost: [15, 25],
             impact: { op: -30, priv: +5, threat: -15 },
             deptChanges: { pacs: 'warn', er: 'warn' },
@@ -1176,6 +1196,7 @@
           },
           {
             label: "【策略 C】先保留現狀以便誘捕追蹤駭客 IP，等下班離峰時段再修改防火牆規則",
+            toneType: 'red',
             cost: [0, 5],
             flag: 'emr_breach',
             darkWeb: { msg: "[BlackHand] DICOM PACS dump completed.", ticker: "🚨 醫學影像伺服器遭大量下載，暗網出現 CT 影像樣本！", attackId: "attack-pacs" },
@@ -1202,6 +1223,7 @@
         options: [
           {
             label: "【策略 A】立即斷開備份區網路隔離、鎖定受駭 AD 管理員帳號並強制重置全網域 Kerberos 雙重金鑰 (KRBTGT)",
+            toneType: 'green',
             cost: [25, 20],
             impact: { op: -15, priv: +10, threat: -25 },
             deptChanges: { emr: 'ok', pacs: 'ok' },
@@ -1210,6 +1232,7 @@
           },
           {
             label: "【策略 B】僅停用該名資訊人員的 AD 帳號，但未重置網域憑證與隔離備份區網路",
+            toneType: 'red',
             cost: [5, 10],
             flag: 'emr_breach',
             impact: { op: -10, priv: -25, threat: +25 },
@@ -1219,6 +1242,7 @@
           },
           {
             label: "【策略 C】緊急將所有備份資料透過網路同步複製到另一台內網檔案伺服器",
+            toneType: 'yellow',
             cost: [15, 15],
             impact: { op: -10, priv: -15, threat: +15 },
             deptChanges: { emr: 'warn', pacs: 'warn' },
@@ -1243,6 +1267,7 @@
         options: [
           {
             label: "【策略 A】於核心交換器封鎖醫療設備 VLAN 間的 SMB (Port 445) 橫向流量，並對受感染工作站逐台離線清理",
+            toneType: 'green',
             cost: [20, 20],
             impact: { op: -15, priv: +5, threat: -20 },
             deptChanges: { pacs: 'warn', pharm: 'ok' },
@@ -1251,6 +1276,7 @@
           },
           {
             label: "【策略 B】對全院所有醫療設備網段發動自動化高強度弱點掃描與強制重啟",
+            toneType: 'yellow',
             cost: [10, 10],
             impact: { op: -30, priv: 0, threat: -5 },
             deptChanges: { pacs: 'danger', icu: 'warn' },
@@ -1259,6 +1285,7 @@
           },
           {
             label: "【策略 C】僅拔除工程師的隨身碟並口頭告誡，讓放射科繼續完成下午門診檢查",
+            toneType: 'red',
             cost: [0, 5],
             impact: { op: 0, priv: -20, threat: +30 },
             deptChanges: { pacs: 'danger', pharm: 'danger' },
@@ -1283,6 +1310,7 @@
         options: [
           {
             label: "【策略 A】立即收回權限並申請搜尋引擎緊急移除快取，同時依個資法主動通知受影響客戶並啟動企業 DLP 稽核",
+            toneType: 'green',
             cost: [25, 15],
             impact: { op: -5, priv: +10, threat: -15 },
             deptChanges: { emr: 'ok' },
@@ -1291,6 +1319,7 @@
           },
           {
             label: "【策略 B】默默關閉雲端連結權限後保持低調，祈禱不會有媒體或當事人發現",
+            toneType: 'red',
             cost: [0, 5],
             flag: 'cover_up',
             impact: { op: 0, priv: -30, threat: +20 },
@@ -1300,6 +1329,7 @@
           },
           {
             label: "【策略 C】全面禁用全院所有雲端協作工具，要求所有行政報表改回紙本簽核一個月",
+            toneType: 'yellow',
             cost: [10, 25],
             impact: { op: -20, priv: +5, threat: -10 },
             deptChanges: { emr: 'ok', pharm: 'warn' },
@@ -1324,6 +1354,7 @@
         options: [
           {
             label: "【策略 A】立即暫停自動包藥機連線，藥師改以 HIS 系統畫面逐筆人工雙重核對給藥，並為 HL7 通道建立加密 VPN 隧道",
+            toneType: 'green',
             cost: [20, 30],
             impact: { op: -20, priv: +5, threat: -20 },
             deptChanges: { pharm: 'warn', icu: 'ok' },
@@ -1332,6 +1363,7 @@
           },
           {
             label: "【策略 B】僅在自動包藥機端設定忽略異常劑量警示，維持全自動發藥以免延誤住院給藥時間",
+            toneType: 'red',
             cost: [5, 5],
             darkWeb: { msg: "[GhostFox] HL7 prescription tampering undetected.", ticker: "🚨 住院藥局傳出發藥劑量異常事件，病患安全亮紅燈！", attackId: "attack-icu" },
             impact: { op: -5, priv: -15, threat: +30 },
@@ -1341,6 +1373,7 @@
           },
           {
             label: "【策略 C】重啟 HIS 介面引擎並清查過去 24 小時所有處方日誌，暫緩非緊急門診領藥 1 小時",
+            toneType: 'yellow',
             cost: [15, 20],
             impact: { op: -15, priv: +5, threat: -10 },
             deptChanges: { pharm: 'warn', icu: 'ok' },
@@ -1365,6 +1398,7 @@
         options: [
           {
             label: "【策略 A】立即強制登出所有異常 Session、重置受駭醫師密碼與憑證，並向全院發送釣魚網址特徵與封鎖 DNS",
+            toneType: 'green',
             cost: [15, 15],
             impact: { op: -10, priv: +10, threat: -20 },
             deptChanges: { emr: 'ok', er: 'ok' },
@@ -1373,6 +1407,7 @@
           },
           {
             label: "【策略 B】寄發一封 Email 提醒醫師們「記得自己有空去改密碼」，暫不強制登出以免打斷看診",
+            toneType: 'red',
             cost: [0, 5],
             flag: 'phish_open',
             impact: { op: 0, priv: -30, threat: +25 },
@@ -1382,6 +1417,7 @@
           },
           {
             label: "【策略 C】暫時關閉全院遠端連線與手機行動巡房 App 24 小時，全面改回院內實體桌機操作",
+            toneType: 'yellow',
             cost: [15, 20],
             impact: { op: -20, priv: +5, threat: -15 },
             deptChanges: { emr: 'ok', er: 'warn' },
@@ -1389,9 +1425,336 @@
             rationale: "雖能快速收斂外部攻擊面，但對依賴行動巡房的臨床工作造成較大不便。"
           }
         ]
-      }
+      },
+      {
+        id: 13,
+        type: '供應鏈資安：第三方元件遭植入後門',
+        title: '健保卡讀卡機控制軟體更新檔遭供應鏈植入木馬',
+        desc: '資訊室例行派送健保卡讀卡機驅動程式更新後，EDR 系統偵測到全院門診批價與診間電腦同時向海外可疑 IP 發出加密連線，疑似廠商更新伺服器遭駭客入侵並夾帶後門程式。',
+        deadline: '健保讀卡機後門擴散倒數',
+        secs: 60,
+        affectedDepts: ['emr', 'pharm'],
+        options: [
+          {
+            label: '立即透過 EDR 全院隔離異常進程、封鎖對外可疑 IP，並回滾至經雜湊值（SHA-256）驗證的舊版驅動程式',
+            cost: 20,
+            staff: 25,
+            toneType: 'green',
+            impact: { op: -10, priv: 10, threat: -25 },
+            deptChanges: { emr: 'ok', pharm: 'ok' },
+            log: '精準阻斷後門連線並完成安全版驅動回滾，門診掛號與領藥迅速恢復正常，無任何健保卡個資外流。',
+            extraNote: '供應鏈軟體更新前務必在隔離沙盒驗證數位簽章與雜湊值，避免信任鏈成為入侵破口。',
+          },
+          {
+            label: '全面中斷全院門診區對外網路並停用健保卡讀取，改由批價櫃檯人工手寫收據與自費押金處理',
+            cost: 15,
+            staff: 35,
+            toneType: 'yellow',
+            impact: { op: -30, priv: 5, threat: -15 },
+            deptChanges: { emr: 'warn', pharm: 'warn' },
+            log: '雖成功阻絕木馬外傳資料，但門診大廳排隊人潮癱瘓，醫護與行政人員疲於奔命處理人工單據。',
+            extraNote: '一刀切斷網雖能止血，但高度依賴健保連線的門診流程將付出慘重營運代價。',
+          },
+          {
+            label: '為避免影響上午看診尖峰，先將 EDR 告警設為靜音白名單，待下班後再聯繫讀卡機廠商確認',
+            cost: 0,
+            staff: 5,
+            toneType: 'red',
+            impact: { op: 0, priv: -30, threat: 30 },
+            deptChanges: { emr: 'danger', pharm: 'danger' },
+            log: '木馬在午間成功下載第二階段勒索模組並竊取數千筆就醫紀錄，下午全院診間系統遭加密鎖死。',
+            extraNote: '面對明確的供應鏈惡意連線告警，延遲處置等同將內網大門敞開給攻擊者橫向移動。',
+          },
+        ],
+      },
+      {
+        id: 14,
+        type: '社交工程與隱私：AI 深偽語音詐騙',
+        title: '急診室護理站接獲高度逼真之 AI 變聲家屬來電索取重症病患病歷與影像',
+        desc: '一名自稱車禍重症病患兒子的男子來電，聲音與口吻經比對與家屬極度相似，聲稱人在國外無法趕回，要求護理站立即將病患的急診病歷摘要與頭部 CT 影像寄至指定個人信箱以辦理保險理賠。',
+        deadline: '病患隱私外洩風險倒數',
+        secs: 50,
+        affectedDepts: ['emr', 'pacs'],
+        options: [
+          {
+            label: '婉拒透過電話與個人信箱傳送病歷，依醫院隱私規範要求對方透過病患本人授權書或官方實名制視訊核驗身分後臨櫃申請',
+            cost: 5,
+            staff: 10,
+            toneType: 'green',
+            impact: { op: -5, priv: 15, threat: -15 },
+            deptChanges: { emr: 'ok', pacs: 'ok' },
+            log: '成功識破 AI 語音深偽詐騙，守住病患敏感醫療隱私，並通報全院護理站加強電話查詢身分核驗。',
+            extraNote: '語音聲紋已不再是可靠驗證依據，敏感醫療資料釋出必須嚴格執行多因子與書面授權程序。',
+          },
+          {
+            label: '因擔心延誤家屬理賠遭投訴，護理師僅口頭唸出病患目前的傷勢與檢驗數值，但拒絕寄送電子檔與影像',
+            cost: 0,
+            staff: 5,
+            toneType: 'yellow',
+            impact: { op: 0, priv: -15, threat: 10 },
+            deptChanges: { emr: 'warn' },
+            log: '雖未流出正式影像檔案，但口頭透露的診斷細節仍遭詐騙集團用來向病患親友進行二次精準詐騙。',
+            extraNote: '口頭洩漏病情同樣違反醫療法與個資法規定，面對高壓情緒勒索應堅守標準核驗流程。',
+          },
+          {
+            label: '基於人道與緊急醫療協助考量，直接將加密壓縮後的病歷與 CT 影像寄至對方提供的信箱並透過電話告知密碼',
+            cost: 0,
+            staff: 5,
+            toneType: 'red',
+            impact: { op: 5, priv: -35, threat: 25 },
+            deptChanges: { emr: 'danger', pacs: 'danger' },
+            log: '病患完整病歷與影像隨後遭公開於網路論壇並引發媒體報導，醫院面臨衛生局裁罰與嚴重聲譽危機。',
+            extraNote: '未經實名驗證即透過非官方管道傳送電子病歷，是醫療機構最常見的人為個資外洩主因。',
+          },
+        ],
+      },
+      {
+        id: 15,
+        type: '醫療器材無線安全：近端無線協定劫持',
+        title: '手術室輸液幫浦與麻醉工作站低功耗藍牙（BLE）遭未知裝置配對干擾',
+        desc: '開刀房進行常規手術期間，麻醉科醫師發現多台智慧型輸液幫浦出現異常的無線配對請求，且輸液速率設定介面短暫出現非人為操作的數值跳動，懷疑有攻擊者在院內公共區域進行近端無線封包注入。',
+        deadline: '手術室給藥安全威脅倒數',
+        secs: 45,
+        affectedDepts: ['icu', 'pharm'],
+        options: [
+          {
+            label: '立即關閉輸液幫浦無線通訊模組切換為單機手動控制模式，同步派遣保全與資安人員持頻譜分析儀清查手術室外圍可疑人員',
+            cost: 15,
+            staff: 25,
+            toneType: 'green',
+            impact: { op: -10, priv: 5, threat: -25 },
+            deptChanges: { icu: 'ok', pharm: 'ok' },
+            log: '手術全程順利完成且無給藥偏差，保全在手術室樓層休息區查獲攜帶無線訊號發射器的可疑人士並報警處理。',
+            extraNote: '關鍵維生與給藥醫材在偵測到無線異常時，應優先降級為實體本地控制以確保病患生命安全。',
+          },
+          {
+            label: '暫停當日所有非緊急排程手術並將受影響醫材全數送回醫工室檢測，僅保留急診開刀房運作',
+            cost: 20,
+            staff: 20,
+            toneType: 'yellow',
+            impact: { op: -30, priv: 0, threat: -15 },
+            deptChanges: { icu: 'warn' },
+            log: '徹底排除了醫材遭劫持的風險，但數十台常規手術被迫延期，引發病患家屬不滿與醫療排程大塞車。',
+            extraNote: '全面停擺雖能避免風險，但若能透過關閉無線功能維持單機運作，便能兼顧手術排程。',
+          },
+          {
+            label: '認定只是醫院內無線訊號干擾雜訊，要求麻醉護理師手動把跳動的數值調回來即可，無需通報或關閉無線功能',
+            cost: 0,
+            staff: 5,
+            toneType: 'red',
+            impact: { op: 0, priv: -5, threat: 35 },
+            deptChanges: { icu: 'danger', pharm: 'danger' },
+            log: '攻擊者隨後再次發送惡意指令導致麻醉劑量異常波動，迫使手術緊急中斷搶救，引發重大醫療安全事件。',
+            extraNote: '將醫材異常操作誤判為單純設備故障而未切斷通訊介面，將直接把病患暴露於致命風險中。',
+          },
+        ],
+      },
+      {
+        id: 16,
+        type: '雲端與 API 安全：越權存取漏洞（IDOR）',
+        title: '病患行動端檢驗報告查詢系統 API 遭自動化腳本循序爬取',
+        desc: 'WAF 監控發現外部單一雲端主機正以每秒上百次的頻率呼叫醫院 App 的檢驗報告查詢 API，攻擊者僅需修改網址中的病歷流水號參數（IDOR 漏洞），即可直接下載其他病患的抽血與病理報告。',
+        deadline: '病患報告大規模外洩倒數',
+        secs: 55,
+        affectedDepts: ['emr', 'pacs'],
+        options: [
+          {
+            label: '立即於 API Gateway 啟用速率限制（Rate Limiting）與來源 IP 封鎖，並緊急部署存取權杖（JWT）與病患身分綁定驗證修補漏洞',
+            cost: 20,
+            staff: 20,
+            toneType: 'green',
+            impact: { op: -5, priv: 15, threat: -25 },
+            deptChanges: { emr: 'ok', pacs: 'ok' },
+            log: '在數分鐘內阻斷爬蟲腳本並完成 API 權限校驗修補，App 查詢服務僅短暫維護 10 分鐘即恢復安全上線。',
+            extraNote: 'API 端點除了驗證是否登入外，更必須嚴格檢查「當前登入者是否有權存取該筆資料 ID」。',
+          },
+          {
+            label: '直接將整套線上檢驗報告查詢平台與醫院 App 伺服器下線關閉 48 小時，要求病患一律回院至服務台列印紙本報告',
+            cost: 10,
+            staff: 30,
+            toneType: 'yellow',
+            impact: { op: -25, priv: 10, threat: -20 },
+            deptChanges: { emr: 'warn', pacs: 'warn' },
+            log: '成功阻止資料繼續遭爬取，但隔日一早醫院服務台湧入大量領取紙本報告的民眾，現場抱怨連連。',
+            extraNote: '下線服務雖能止血，但缺乏精準的 WAF 規則與快速熱修補機制，會大幅衝擊病患就醫體驗。',
+          },
+          {
+            label: '僅在防火牆封鎖當前攻擊的單一來源 IP，未修改 API 程式權限驗證邏輯便繼續開放外部查詢',
+            cost: 5,
+            staff: 5,
+            toneType: 'red',
+            impact: { op: 0, priv: -35, threat: 25 },
+            deptChanges: { emr: 'danger', pacs: 'danger' },
+            log: '攻擊者 5 分鐘後切換多組代理伺服器（Proxy）IP 繼續爬取，超過兩萬筆病患檢驗報告遭完整打包外流。',
+            extraNote: '治標不治本的單純封鎖 IP 無法防禦分散式爬蟲，唯有從程式碼根除越權漏洞才能真正止血。',
+          },
+        ],
+      },
+      {
+        id: 17,
+        type: '醫療 AI 安全：模型異常與資料下毒',
+        title: '胸腔 X 光 AI 輔助判讀系統突然大量將正常影像標記為高危氣胸',
+        desc: '放射科與急診醫師反映，今日上午上線的 AI 影像輔助判讀模組頻繁跳出「疑似張力性氣胸」高風險警示，但實際閱片多為正常影像，疑似模型權重檔案遭篡改或近期再訓練資料遭污染。',
+        deadline: '臨床判讀誤導風險倒數',
+        secs: 55,
+        affectedDepts: ['pacs', 'emr'],
+        options: [
+          {
+            label: '立即停用 AI 自動警示推播並切回傳統放射科醫師判讀流程，同步隔離模型伺服器並比對先前通過驗證的模型雜湊值與訓練紀錄',
+            cost: 15,
+            staff: 20,
+            toneType: 'green',
+            impact: { op: -10, priv: 5, threat: -20 },
+            deptChanges: { pacs: 'ok', emr: 'ok' },
+            log: '成功避免假陽性警報干擾急診處置，並查出模型更新管線遭植入異常權重，迅速還原至可信賴版本。',
+            extraNote: 'AI 僅為輔助工具，一旦出現判讀漂移或異常偏差，應立即降級為人工判讀並驗證模型完整性。',
+          },
+          {
+            label: '保留 AI 系統運作，但要求住院醫師與急診醫師對每一筆 AI 跳出的警示都必須逐一人工覆核並簽名確認才可放行',
+            cost: 5,
+            staff: 25,
+            toneType: 'yellow',
+            impact: { op: -20, priv: 0, threat: -10 },
+            deptChanges: { pacs: 'warn' },
+            log: '雖降低了誤判直接影響病患的機率，但大量假警報讓急診與影像科醫師疲於奔命，判讀效率明顯下降。',
+            extraNote: '在高假警報率下硬撐使用，容易引發「警示疲勞（Alert Fatigue）」，反而增加漏看真異常的風險。',
+          },
+          {
+            label: '認為只是演算法靈敏度偏高，直接調高 AI 警示門檻分數並繼續讓系統自動標記病歷摘要',
+            cost: 0,
+            staff: 5,
+            toneType: 'red',
+            impact: { op: 0, priv: -10, threat: 25 },
+            deptChanges: { pacs: 'danger', emr: 'danger' },
+            log: '隨意調整門檻不僅未排除模型遭竄改的風險，後續更發生真實病灶遭漏報的延誤事件。',
+            extraNote: '未經根因排查與模型驗證就隨意調整參數，無法解決底層模型被污染或遭劫持的資安問題。',
+          },
+        ],
+      },
+      {
+        id: 18,
+        type: '院區工控安全：BMS 建築與能源系統遭鎖定',
+        title: '醫院大樓空調與不斷電系統（UPS）中控主機遭勒索軟體加密',
+        desc: '工務室回報中央空調與部分樓層配電監控主機螢幕出現勒索訊息，導致手術室與藥局恆溫恆濕控制異常，若環境溫度持續上升將影響藥品保存與精密醫療設備運作。',
+        deadline: '院區環境與藥品溫控失守倒數',
+        secs: 60,
+        affectedDepts: ['pharm', 'icu'],
+        options: [
+          {
+            label: '立即斷開受感染 BMS 主機與院內行政網路的連線，啟動本地手動溫控與備援冷卻機制，並優先確保藥局冷藏與 ICU 關鍵區域散熱',
+            cost: 20,
+            staff: 25,
+            toneType: 'green',
+            impact: { op: -10, priv: 5, threat: -20 },
+            deptChanges: { pharm: 'ok', icu: 'ok' },
+            log: '成功守住藥品冷鏈與核心病房環境穩定，並切斷工控網路向核心醫療系統擴散的路徑。',
+            extraNote: 'OT 工控系統發生勒索事件時，優先保護關鍵溫控與電力供應，並阻斷 IT/OT 橫向感染最為關鍵。',
+          },
+          {
+            label: '緊急疏散受影響樓層並暫停全院非急迫性醫療服務，等待工控廠商遠端連線排查勒索軟體來源',
+            cost: 25,
+            staff: 30,
+            toneType: 'yellow',
+            impact: { op: -30, priv: 0, threat: -10 },
+            deptChanges: { pharm: 'warn', icu: 'warn' },
+            log: '雖然避免了設備過熱風險，但全院大範圍停擺造成嚴重營運損失，且遠端排查耗時甚久。',
+            extraNote: '在尚可透過本地手動調控維持關鍵區域時，全面停擺會讓醫院付出過高的營運代價。',
+          },
+          {
+            label: '嘗試直接重開感染勒索軟體的 BMS 控制主機，並允許外部廠商透過 TeamViewer 直接連入中控主機進行修復',
+            cost: 5,
+            staff: 10,
+            toneType: 'red',
+            impact: { op: -15, priv: -20, threat: 35 },
+            deptChanges: { pharm: 'danger', icu: 'danger' },
+            log: '重開機觸發加密程式進一步鎖定更多控制節點，且開放的高權限遠端連線成為駭客深入內網的新通道。',
+            extraNote: '面對已遭勒索軟體入侵的主機，隨意重啟或開放未受控遠端連線極易擴大災情。',
+          },
+        ],
+      },
+      {
+        id: 19,
+        type: '身分與雲端安全：釣魚郵件與帳號遭盜用',
+        title: '多名行政與醫務人員點擊假冒衛福部公文信件後，雲端信箱出現異常轉寄規則',
+        desc: '資安中心發現院內有 6 個帳號在點擊「醫療機構資安查核通知」釣魚信件並輸入帳密後，信箱被自動建立隱藏轉寄規則，將包含病患申訴與院內排班資訊的郵件轉寄至不明外部信箱。',
+        deadline: '雲端郵件持續外流倒數',
+        secs: 50,
+        affectedDepts: ['emr'],
+        options: [
+          {
+            label: '立即強制登出所有異常工作階段並重設密碼、啟用 Phishing-resistant MFA，同時批次清除惡意轉寄規則並稽核近期登入紀錄',
+            cost: 15,
+            staff: 15,
+            toneType: 'green',
+            impact: { op: -5, priv: 15, threat: -25 },
+            deptChanges: { emr: 'ok' },
+            log: '迅速拔除隱藏轉寄規則並踢除攻擊者連線，成功遏止後續郵件外洩，同時發送全院防釣魚警示。',
+            extraNote: '帳號遭釣魚後只改密碼不夠，必須同步撤銷既有 Session、清除轉寄規則並強化 MFA。',
+          },
+          {
+            label: '暫時停用這 6 個帳號的外部收發信功能，並逐一打電話通知當事人自行更改密碼',
+            cost: 5,
+            staff: 20,
+            toneType: 'yellow',
+            impact: { op: -15, priv: 5, threat: -10 },
+            deptChanges: { emr: 'warn' },
+            log: '暫時止住了信箱外寄，但若未清理信箱內既有的轉寄規則與權限，後續仍可能留下隱患。',
+            extraNote: '僅停用部分功能而未清理規則與 Session，處置容易不夠徹底。',
+          },
+          {
+            label: '僅提醒這幾位同仁以後不要亂點可疑連結，先觀察一兩天看是否真的有異常寄信再處理',
+            cost: 0,
+            staff: 5,
+            toneType: 'red',
+            impact: { op: 0, priv: -30, threat: 25 },
+            deptChanges: { emr: 'danger' },
+            log: '攻擊者利用已取得的信箱權限在院內發動二次內部釣魚，並持續蒐集敏感行政與病患資料。',
+            extraNote: '帳號已遭入侵卻只做口頭提醒與觀望，會讓攻擊者有充足時間擴大橫向滲透。',
+          },
+        ],
+      },
+      {
+        id: 20,
+        type: '遠距醫療與雲端：跨租戶資料洩漏',
+        title: '遠距照護居家生理監測平台更新後，病患帳號可看到其他院所與病患的量測紀錄',
+        desc: '居家照護護理師回報，遠距血壓與血糖監測後台在套用新版查詢介面後，部分帳號檢視報表時意外顯示其他病患甚至合作機構的生理數值與聯絡資訊，疑似多租戶權限隔離設定失效。',
+        deadline: '跨病患隱私暴露倒數',
+        secs: 55,
+        affectedDepts: ['emr', 'icu'],
+        options: [
+          {
+            label: '立即暫停有權限隔離疑慮的查詢功能並回滾至前一穩定版本，緊急修補租戶與病患資料存取控制後重新驗證再開放',
+            cost: 15,
+            staff: 20,
+            toneType: 'green',
+            impact: { op: -10, priv: 20, threat: -20 },
+            deptChanges: { emr: 'ok', icu: 'ok' },
+            log: '即時止血並完成權限隔離修補與測試，未發生大規模外部下載事件，病患隱私獲得妥善保護。',
+            extraNote: '跨租戶或跨病患資料暴露屬於高嚴重度隱私事件，應優先止血回滾並嚴格驗證存取控制。',
+          },
+          {
+            label: '先向遠距照護團隊發公告要求大家「只點開自己負責的病患名單」，暫不關閉系統查詢功能',
+            cost: 0,
+            staff: 10,
+            toneType: 'yellow',
+            impact: { op: 0, priv: -20, threat: 10 },
+            deptChanges: { emr: 'warn' },
+            log: '依靠自律規範無法阻止系統層級的權限越界，介面列表載入時仍可能暴露不該顯示的資料。',
+            extraNote: '系統存取控制缺陷不能只靠使用者自律彌補，必須從權限邏輯與資料查詢條件修正。',
+          },
+          {
+            label: '將問題歸咎於瀏覽器快取殘留，請護理師自行清除快取後繼續使用，不通報系統開發團隊',
+            cost: 0,
+            staff: 5,
+            toneType: 'red',
+            impact: { op: 0, priv: -35, threat: 25 },
+            deptChanges: { emr: 'danger', icu: 'danger' },
+            log: '因未及時修正後端權限隔離漏洞，異常資料暴露持續擴大並遭外部帳號察覺回報，引發嚴重個資爭議。',
+            extraNote: '將後端權限隔離問題誤判為單純瀏覽器快取並隱匿不報，會讓隱私風險持續失控。',
+          },
+        ],
+      },
     ];
-
     const DRAW_COUNT = 5; // 每次模擬從 12 題中隨機抽取 5 題
 
     function drawRandomScenarios(count = DRAW_COUNT) {
@@ -1720,11 +2083,32 @@
       // Typewriter narrative
       const tw = (TWISTS[data.id] || []).filter(t => state.flags.includes(t.f));
       const add = k => tw.reduce((a, t) => a + ((t.mod && t.mod[k]) || 0), 0);
-      state.curOptions = data.options.map(o => ({ ...o, impact: { op: o.impact.op + add('op'), priv: o.impact.priv + add('priv'), threat: o.impact.threat + add('threat') } }));
-      const secs = Math.max(20, (data.secs || 60) + tw.reduce((a, t) => a + (t.time || 0), 0));
-      stopTimer();
-      document.getElementById('twist-box').innerHTML = '';
+      const EXTRA_NOTES = {
+        4: ['聲譽 +15%', '聲譽 -40%', '聲譽 -15%'],
+        1: ['病患安全 -5%', '病患安全 -20%', '病患安全 -10%'],
+        3: ['病患安全 +10%', '病患安全 +5%', '病患安全 -25%'],
+      };
+
+      state.curOptions = shuffleOptions(
+        data.options.map((o, origIdx) => {
+          const imp = {
+            ...o.impact,
+            op: (o.impact?.op ?? 0) + add('op'),
+            priv: (o.impact?.priv ?? 0) + add('priv'),
+            threat: (o.impact?.threat ?? 0) + add('threat'),
+          };
+          return {
+            ...o,
+            origIdx,
+            extraNote: EXTRA_NOTES[data.id]?.[origIdx] ?? o.extraNote ?? null,
+            impact: imp,
+          };
+        })
+      );
+
       document.getElementById('comm-box').innerHTML = '';
+      const baseSecs = (typeof SECS !== 'undefined' && SECS[data.id]) || data.secs || 60;
+      const secs = Math.max(20, baseSecs + tw.reduce((a, t) => a + (t.time || 0), 0));
       typeWriter(data.desc, 'typewriter-text', () => {
         document.getElementById('twist-box').innerHTML = tw.map(t => `<div class="rise text-xs p-2.5 rounded border border-amber-500/50 bg-amber-950/30 text-amber-300"><i class="fa-solid fa-link mr-1.5"></i>${t.text}</div>`).join('');
         renderOptions(state.curOptions);
@@ -1741,7 +2125,7 @@
       }
     }
 
-    const SECS = { 1: 30, 2: 30, 3: 30, 4: 25 };
+    const SECS = { 1: 60, 2: 60, 3: 60, 4: 60 };
     const DEADLINE = { 1: '勒索付款期限', 2: '憑證外洩擴大中', 3: '偽造封包攻擊進行中', 4: '主管機關通報期限' };
     // 各選項資源成本 [預算, 人力]
     const COST = {
@@ -1929,23 +2313,11 @@
     }
 
     function extraImpactText(scenarioId, idx) {
-      const notes = [];
-      if (scenarioId === 4) {
-        if (idx === 0) notes.push('聲譽 +15%');
-        if (idx === 1) notes.push('聲譽 -40%');
-        if (idx === 2) notes.push('聲譽 -15%');
-      }
-      if (scenarioId === 1) {
-        if (idx === 0) notes.push('病患安全 -5%');
-        if (idx === 1) notes.push('病患安全 -20%');
-        if (idx === 2) notes.push('病患安全 -10%');
-      }
-      if (scenarioId === 3) {
-        if (idx === 0) notes.push('病患安全 +10%');
-        if (idx === 1) notes.push('病患安全 +5%');
-        if (idx === 2) notes.push('病患安全 -25%');
-      }
-      return notes.length ? `<span class="text-slate-300">${notes.join(' · ')}</span>` : '';
+      const opt = state.curOptions && state.curOptions[idx];
+      const notes = opt && opt.extraNote ? [opt.extraNote] : [];
+      return notes.length
+        ? `<span class="text-slate-300">${notes.join(' · ')}</span>`
+        : '';
     }
 
     function renderOptions(options) {
@@ -1953,18 +2325,21 @@
       box.innerHTML = '';
       locked = false;
       const sc = state.activeScenarios[state.currentPhase];
+      console.log('本次選項順序：', options.map(o => o.label || o.title || o.text || o.id));
       options.forEach((opt, idx) => {
+        const rawTitle = opt.label || opt.title || opt.text || '';
+        const cleanTitle = rawTitle.replace(/^【策略\s*[A-Za-z0-9]+】\s*/, '');
         const btn = document.createElement('button');
         btn.className = 'rise w-full text-left p-4 rounded-lg bg-slate-950/80 hover:bg-slate-900 border border-slate-800 hover:border-cyan-500/60 text-slate-200 text-xs sm:text-sm font-medium transition-all group flex items-start gap-3.5 shadow-lg';
         btn.style.animationDelay = `${idx * 80}ms`;
-        const cost = opt.cost || [0, 0];
+        const cost = Array.isArray(opt.cost) ? opt.cost : [opt.cost ?? 0, opt.staff ?? 0];
         const poor = state.budget < cost[0] || state.staff < cost[1];
         if (poor) { btn.disabled = true; btn.classList.add('opacity-40', 'cursor-not-allowed'); }
         btn.onclick = () => selectOption(idx);
         btn.innerHTML = `
           <div class="w-7 h-7 rounded bg-slate-900 group-hover:bg-cyan-500 group-hover:text-slate-950 text-cyan-400 font-tech font-bold flex items-center justify-center text-xs shrink-0 border border-slate-700 group-hover:border-cyan-400 transition-colors">${String.fromCharCode(65 + idx)}</div>
           <div class="flex-1">
-            <div class="font-semibold text-slate-100 group-hover:text-cyan-300 transition-colors mb-1">${opt.label}</div>
+            <div class="font-semibold text-slate-100 group-hover:text-cyan-300 transition-colors mb-1">${cleanTitle}</div>
             <div class="text-[11px] font-mono text-amber-400 ${state.hints ? 'mb-1' : ''}"><i class="fa-solid fa-coins mr-1"></i>預算 -${cost[0]} <i class="fa-solid fa-user-nurse ml-2 mr-1"></i>人力 -${cost[1]}${poor ? ' · 資源不足' : ''}</div>
             ${state.hints ? `<div class="text-[11px] text-slate-400 font-mono flex flex-wrap items-center gap-4">${impactHTML(opt.impact)}${extraImpactText(sc?.id, idx)}</div>` : ''}
           </div>
@@ -1989,7 +2364,14 @@
       clearTimeout(t._h);
       t._h = setTimeout(() => t.style.opacity = 0, 2600);
     }
-
+    function shuffleOptions(list) {
+      const arr = [...list];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
     function selectOption(idx, forced) {
       if (isTyping || locked) return;
       const scenario = state.activeScenarios[state.currentPhase];
@@ -2023,15 +2405,15 @@
       // Reputation
       if (scenario.id === 4) {
 
-        if (idx === 0) {
+        if (sel.origIdx === 0) {
           state.reputation += 15;
         }
 
-        if (idx === 1) {
+        if (sel.origIdx === 1) {
           state.reputation -= 40;
         }
 
-        if (idx === 2) {
+        if (sel.origIdx === 2) {
           state.reputation -= 15;
         }
 
@@ -2040,16 +2422,16 @@
       // Patient Safety
       if (scenario.id === 1) {
 
-        if (idx === 0) {
+        if (sel.origIdx === 0) {
           state.patientSafety -= 5;
         }
 
-        if (idx === 1) {
+        if (sel.origIdx === 1) {
           state.patientSafety -= 20;
           state.fatalities += 1;
         }
 
-        if (idx === 2) {
+        if (sel.origIdx === 2) {
           state.patientSafety -= 10;
         }
 
@@ -2057,15 +2439,15 @@
 
       if (scenario.id === 3) {
 
-        if (idx === 0) {
+        if (sel.origIdx === 0) {
           state.patientSafety += 10;
         }
 
-        if (idx === 1) {
+        if (sel.origIdx === 1) {
           state.patientSafety += 5;
         }
 
-        if (idx === 2) {
+        if (sel.origIdx === 2) {
 
           state.patientSafety -= 25;
 
@@ -2089,9 +2471,12 @@
 
       // Outcome feedback: show the consequence before moving on
       const net = im.op + im.priv - im.threat;
-      const tone = net >= -20 ? { cls: 'border-emerald-500/50 bg-emerald-950/30', txt: 'text-emerald-400', tag: '處置有效' }
-        : net >= -50 ? { cls: 'border-amber-500/50 bg-amber-950/30', txt: 'text-amber-400', tag: '代價可控' }
-          : { cls: 'border-rose-500/50 bg-rose-950/30', txt: 'text-rose-400', tag: '處置失當' };
+      const TONE_STYLE = {
+        green: { cls: 'border-emerald-500/50 bg-emerald-950/30', txt: 'text-emerald-400', tag: '處置有效' },
+        yellow: { cls: 'border-amber-500/50 bg-amber-950/30', txt: 'text-amber-400', tag: '代價折衷' },
+        red: { cls: 'border-rose-500/50 bg-rose-950/30', txt: 'text-rose-400', tag: '處置失當' },
+      };
+      const tone = TONE_STYLE[sel.toneType] ?? TONE_STYLE.yellow;
       if (sel.darkWeb || net < -50) sound.playBreach();
       else if (net >= -20) sound.playLockdown();
       const last = state.currentPhase === state.activeScenarios.length - 1;
