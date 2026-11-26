@@ -2463,8 +2463,13 @@
       state.threatLevel = clamp(state.threatLevel + im.threat, 0, 100);
       state.reputation = clamp(state.reputation, 0, 100);
       state.patientSafety = clamp(state.patientSafety, 0, 100);
-      state.history.push({ phase: state.currentPhase + 1, title: scenario.title, choice: sel.label, impact: im, rationale: sel.rationale });
-
+      state.history.push({
+        phase: state.currentPhase + 1,
+        title: scenario.title,
+        choice: sel.label,
+        impact: im,
+        rationale: sel.rationale || sel.extraNote || sel.log || '已完成應變處置。'
+      });
       if (sel.deptChanges) updateDepartmentUI(sel.deptChanges);
       addLog((forced ? '【逾時自動處置】' : '') + sel.log, im);
       updateMetricsUI();
@@ -2679,16 +2684,16 @@
           deptPenalty -= 5;
 
       });
-      const baseScore =
-        (
-          state.opRate +
-          state.privIndex +
-          state.reputation +
-          state.patientSafety -
-          state.threatLevel
-        ) / 4;
-
-      const score = baseScore + deptPenalty;
+      const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+      const threatSuppression = 100 - state.threatLevel;
+      const avgScore = (
+        state.opRate +
+        state.privIndex +
+        state.reputation +
+        state.patientSafety +
+        threatSuppression
+      ) / 5;
+      const score = clamp(avgScore + deptPenalty, 0, 100);
 
       let title = "";
       let color = "";
